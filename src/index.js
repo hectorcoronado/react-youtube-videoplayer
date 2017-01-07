@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// create new component to produce html
+import { youTubeKey } from 'keys'
+
+const YOU_TUBE_KEY = youTubeKey;
+
 const App = () => {
   return <div>Hi!</div>;
 }
 
-// take this component's generated html and display it (in DOM)
 ReactDOM.render(<App />, document.querySelector('.container'));
