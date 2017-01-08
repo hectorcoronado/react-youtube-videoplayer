@@ -37,7 +37,16 @@ class SearchBar extends Component {
     */
     return (
       <div>
-        <input onChange={event => this.setState({ term: event.target.value })} />
+        <input
+          /*
+          we add value={this.state.term} to turn this into a controlled field (its value is set
+          by state, not vice versa). The value is set to an empty string when constructor() is
+          called. When user enters text, this.state.term is updated via our onChange callback,
+          updating state -- THEN, our component re-renders, and the value is set via state.
+          */
+          value={this.state.term}
+          onChange={event => this.setState({ term: event.target.value })}
+        />
         {/*
         it is, however, okay to reference this.state.term, e.g. if we were to do the following:
         Value of the input: {this.state.term}
