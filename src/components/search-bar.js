@@ -1,0 +1,51 @@
+import React, { Component } from 'react';
+
+/*
+this is a Functional component (as opposed to Class component):
+
+const SearchBar = () => {
+  return <input />
+};
+
+Functional components DO NOT have State.
+
+Since users type into this input, our component needs to be able to introspect itself, so we need
+a class based component. Class based components must always include a render() method, and return
+some JSX.
+
+We define a new class, SearchBar, and we give it access to all the  functionality that the
+React.Component class has:
+*/
+
+class SearchBar extends Component {
+  // constructor() gets called automatically any time a new instance of any JS class gets created
+  constructor(props) {
+    // calling super() calls a method defined in parent class (Component)
+    super(props);
+
+    /* we initialize state by creating a new object and assigning it to this.state. We NEVER update
+    state outside of the constructor by reassigning its value. We can't declare
+    this.state = { something: else }, we must use this.setState() and pass it an object */
+    this.state = { term: '' };
+  }
+
+  render() {
+    /*
+    NEVER: this.state.term = event.target.value
+
+    this.setState() is how state is updated after it's created in our constructor.
+    */
+    return (
+      <div>
+        <input onChange={event => this.setState({ term: event.target.value })} />
+        {/*
+        it is, however, okay to reference this.state.term, e.g. if we were to do the following:
+        Value of the input: {this.state.term}
+        */}
+      </div>
+
+    );
+  }
+}
+
+export default SearchBar;
