@@ -1,5 +1,7 @@
 import React from 'react';
 
+import VideoListItem from './video-list-item';
+
 /*
 This component never needs to modify state and is in only charge of displaying data we search for
 coming back from YouTube, so it can be a functional component.
@@ -11,9 +13,17 @@ component; if it were a class-based component, it would have access to props any
 */
 
 const VideoList = (props) => {
+  /*
+  for each item in props.videos, we call a function that returns JSX (video.etag is provided by
+  the returned object from YouTube):
+  */
+  const videoItems = props.videos.map((video) => {
+    return <VideoListItem key={video.etag} video={video} />
+  });
+
   return (
     <ul className="col-md-4 list-group">
-      {props.videos.length}
+      {videoItems}
     </ul>
   );
 };
