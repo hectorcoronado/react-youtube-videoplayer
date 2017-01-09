@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
 
 import SearchBar from './components/search-bar';
+import VideoList from './components/video-list';
 
 import { YOU_TUBE_KEY } from '../keys'
 
@@ -47,6 +48,13 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
+        {/*
+        VideoList needs a reference to videos -- we need to pass data from App (parent component)
+        to it via props, which will "arrive" to the component via an argument (object called
+        "props"). This is because VideoList is a FUNCTIONAL component; if we're passing props to a
+        class-based component, props are available anywhere in them via "this.props". 
+        */}
+        <VideoList videos={this.state.videos}/>
       </div>
     )
   }
