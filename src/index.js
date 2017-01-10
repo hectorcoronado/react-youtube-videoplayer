@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
+import _ from 'lodash';
 
 import SearchBar from './components/search-bar';
 import VideoList from './components/video-list';
@@ -74,13 +75,26 @@ class App extends Component {
   }
 
   render() {
+    /*
+    We create a function, and passed it to lodash's debounce; it takes the inner function:
+
+    (term) => {this.videoSearch(term)}
+
+    and returns a new function that can only run every 300ms
+    */
+    const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
+
     return (
       <div>
         {/*
         When SearchBar calls onSearchTermChange, it will do so with a search term (a string) and it
         will get sent to videoSearch, and on to YTSearch:
-        */}
+
         <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+
+        Once we import lodash to make the search less laggy, we refactor our call to videoSearch:
+        */}
+        <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo}/>
         {/*
         VideoList needs a reference to videos -- we need to pass data from App (parent component)
