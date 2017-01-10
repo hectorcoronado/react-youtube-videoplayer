@@ -38,6 +38,7 @@ class SearchBar extends Component {
     return (
       <div className="search-bar">
         <input
+          placeholder="Search YouTube"
           /*
           we add value={this.state.term} to turn this into a controlled field (its value is set
           by state, not vice versa). The value is set to an empty string when constructor() is
