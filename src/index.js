@@ -25,7 +25,15 @@ class App extends Component {
     // calling super() calls a method defined in parent class (Component)
     super(props);
 
-    this.state = { videos: [] };
+    /*
+    In order for users to select individual videos, we will pass a callback from app to VideoList,
+    and from VideoList to VideoListItem; whenever a VidListItem gets clicked, the callback runs and
+    selectedVideo will change.
+    */
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    };
 
     /*
     function to fetch videos from YouTube; automatically called whenever our app initializes,
@@ -35,28 +43,41 @@ class App extends Component {
       this.setState({ videos: data });
     });
 
-    We can refactor the above function to use ES6 syntax, giving key & property obj passed to
-    setState the same name:
-    */
-    YTSearch(
-      {key: YOU_TUBE_KEY, term: 'surfboards'}, // arg w/key & search term
-      (videos) => { this.setState({ videos }); } // arg w/callback function
-    );
+    First arg is a plain object with our API key, and the search term. Second argument is a
+    callback. We can refactor the callback function to use ES6 syntax, giving key & property
+    obj passed to setState the same name:
 
+    YTSearch({key: YOU_TUBE_KEY, term: 'surfboards'}, (videos) => { this.setState({videos}); });
+
+    ... and further change it once we add the selectedVideo property:
+    */
+    YTSearch({key: YOU_TUBE_KEY, term: 'surfboards'},
+      (videos) => { this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      });
+    });
   }
 
   render() {
     return (
       <div>
         <SearchBar />
-        <VideoDetail video={this.state.videos[0]}/>
+        <VideoDetail video={this.state.selectedVideo}/>
         {/*
         VideoList needs a reference to videos -- we need to pass data from App (parent component)
         to it via props, which will "arrive" to the component via an argument (object called
         "props"). This is because VideoList is a FUNCTIONAL component; if we're passing props to a
         class-based component, props are available anywhere in them via "this.props".
         */}
-        <VideoList videos={this.state.videos}/>
+        <VideoList
+        /*
+        We're defining a function that takes a video and updates App's state (selectedVideo); when
+        VideoList component calls this function with a video, App's state will be updated.
+        */
+          onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
+          videos={this.state.videos}
+        />
       </div>
     )
   }

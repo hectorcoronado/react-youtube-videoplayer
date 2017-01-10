@@ -18,7 +18,18 @@ const VideoList = (props) => {
   the returned object from YouTube):
   */
   const videoItems = props.videos.map((video) => {
-    return <VideoListItem key={video.etag} video={video} />
+    return (
+      /*
+      We're taking the callback function from App component, onVideoSelect, which was passed down
+      to this component and is available as props.onVideoSelect, and further passing it along to
+      VideoListItem
+      */
+      <VideoListItem
+        onVideoSelect={props.onVideoSelect}
+        key={video.etag}
+        video={video}
+      />
+    )
   });
 
   return (
