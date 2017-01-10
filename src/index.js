@@ -50,11 +50,25 @@ class App extends Component {
     YTSearch({key: YOU_TUBE_KEY, term: 'surfboards'}, (videos) => { this.setState({videos}); });
 
     ... and further change it once we add the selectedVideo property:
-    */
     YTSearch({key: YOU_TUBE_KEY, term: 'surfboards'},
       (videos) => { this.setState({
         videos: videos,
         selectedVideo: videos[0]
+      });
+    });
+
+    Since we need this search function to be dynamic and to pass it down to our SearchBar
+    component, we initialize it with a hard-coded argument & define it below:
+    */
+    this.videoSearch('surfboards');
+  }
+
+  videoSearch(term) {
+    YTSearch({key: YOU_TUBE_KEY, term: term},
+      (videos) => {
+        this.setState({
+          videos: videos,
+          selectedVideo: videos[0]
       });
     });
   }
@@ -62,7 +76,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <SearchBar />
+        {/*
+        When SearchBar calls onSearchTermChange, it will do so with a search term (a string) and it
+        will get sent to videoSearch, and on to YTSearch:
+        */}
+        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
         <VideoDetail video={this.state.selectedVideo}/>
         {/*
         VideoList needs a reference to videos -- we need to pass data from App (parent component)

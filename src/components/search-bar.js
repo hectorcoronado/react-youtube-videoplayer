@@ -45,15 +45,26 @@ class SearchBar extends Component {
           updating state -- THEN, our component re-renders, and the value is set via state.
           */
           value={this.state.term}
+          /*
+          Once we wire up our search input, this line:
           onChange={event => this.setState({ term: event.target.value })}
+          needs to be refactored to this:
+          */
+          onChange={event => this.onInputChange(event.target.value)}
         />
         {/*
         it is, however, okay to reference this.state.term, e.g. if we were to do the following:
         Value of the input: {this.state.term}
         */}
       </div>
-
     );
+  }
+
+  /* We want to update State with the term, and invoke the callback we got from App component,
+  onSearchTermChange() with the new term */
+  onInputChange(term) {
+    this.setState({term});
+    this.props.onSearchTermChange(term);
   }
 }
 
