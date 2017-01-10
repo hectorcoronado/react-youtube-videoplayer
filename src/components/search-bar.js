@@ -36,7 +36,7 @@ class SearchBar extends Component {
     this.setState() is how state is updated after it's created in our constructor.
     */
     return (
-      <div>
+      <div className="search-bar">
         <input
           /*
           we add value={this.state.term} to turn this into a controlled field (its value is set
