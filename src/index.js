@@ -7,7 +7,7 @@ import SearchBar from './components/search-bar';
 import VideoList from './components/video-list';
 import VideoDetail from './components/video-detail';
 
-import { YOU_TUBE_KEY } from '../keys'
+import { YOU_TUBE_KEY } from '../keys';
 
 /* functional App component, which got refactored to a class component below
 
